@@ -9,6 +9,18 @@
   </head>
 
   <body>
+    <% if current_user %>
+      <%= current_user.username %>
+      <form action=" <%= session_url %> " method="post">
+          <input type="hidden" name="authenticity_token" value=" <%= form_authenticity_token %>">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="Log out">
+      </form>
+    <% else %>
+    <form action=" <%= new_session_url %> " method="get">
+        <input type="submit" value="Log in">
+    </form>
+    <% end %>
     <%= yield %>
   </body>
 </html>

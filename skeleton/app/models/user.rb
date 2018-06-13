@@ -32,11 +32,16 @@ class User < ApplicationRecord
     
   def password=(password)
     @password = password
-    password_digest = BCrypt::Password.create(password)
+    # debugger
+    self.password_digest = BCrypt::Password.create(password)
   end 
   
   def is_password?(password)
     password == BCrypt::Password.new(password_digest)
+  end 
+  
+  def ensure_session_token
+    self.session_token ||= User.generate_session_token
   end 
   
   def self.find_by_credentials(username, password)
