@@ -25,4 +25,9 @@ class ApplicationController < ActionController::Base
   def ensure_logged_out
     redirect_to cats_url if logged_in?
   end
+  
+  def ensure_owner
+    cat = current_user.cats.where(id: params[:id])
+    redirect_to cat_url if cat.empty?
+  end  
 end
